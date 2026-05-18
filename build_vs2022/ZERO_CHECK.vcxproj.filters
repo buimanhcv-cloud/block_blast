@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\buima\Documents\app\build_vs2022\CMakeFiles\67ed29ec6de657000aef5e5b02157ec7\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{B74A6B77-8DFF-335D-AA0A-EDB2B6B59F33}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

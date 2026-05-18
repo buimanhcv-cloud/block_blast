@@ -1,0 +1,3 @@
+C:/Users/buima/Documents/app/build_x64/CMakeFiles/BlockPuzzleGame.dir
+C:/Users/buima/Documents/app/build_x64/CMakeFiles/ALL_BUILD.dir
+C:/Users/buima/Documents/app/build_x64/CMakeFiles/ZERO_CHECK.dir
