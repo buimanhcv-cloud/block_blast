@@ -1,8 +1,11 @@
 C:\Users\buima\Documents\app\main.cpp;C:\Users\buima\Documents\app\build_x64\BlockPuzzleGame.dir\Release\main.obj
 C:\Users\buima\Documents\app\core\GameManager.cpp;C:\Users\buima\Documents\app\build_x64\BlockPuzzleGame.dir\Release\GameManager.obj
+C:\Users\buima\Documents\app\core\Scoring.cpp;C:\Users\buima\Documents\app\build_x64\BlockPuzzleGame.dir\Release\Scoring.obj
 C:\Users\buima\Documents\app\board\Board.cpp;C:\Users\buima\Documents\app\build_x64\BlockPuzzleGame.dir\Release\Board.obj
 C:\Users\buima\Documents\app\block\Block.cpp;C:\Users\buima\Documents\app\build_x64\BlockPuzzleGame.dir\Release\Block.obj
 C:\Users\buima\Documents\app\ui\Menu.cpp;C:\Users\buima\Documents\app\build_x64\BlockPuzzleGame.dir\Release\Menu.obj
+C:\Users\buima\Documents\app\ui\DuelSelectScreen.cpp;C:\Users\buima\Documents\app\build_x64\BlockPuzzleGame.dir\Release\DuelSelectScreen.obj
 C:\Users\buima\Documents\app\ui\HUD.cpp;C:\Users\buima\Documents\app\build_x64\BlockPuzzleGame.dir\Release\HUD.obj
 C:\Users\buima\Documents\app\util\ResourceUtils.cpp;C:\Users\buima\Documents\app\build_x64\BlockPuzzleGame.dir\Release\ResourceUtils.obj
+C:\Users\buima\Documents\app\util\ScoreStorage.cpp;C:\Users\buima\Documents\app\build_x64\BlockPuzzleGame.dir\Release\ScoreStorage.obj
 C:\Users\buima\Documents\app\tests\SelfTest.cpp;C:\Users\buima\Documents\app\build_x64\BlockPuzzleGame.dir\Release\SelfTest.obj

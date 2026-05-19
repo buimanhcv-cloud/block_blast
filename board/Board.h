@@ -20,9 +20,10 @@ public:
     void render(sf::RenderWindow& window);
     void update();
 
-    bool canPlaceBlock(const Block& block, sf::Vector2i position);
+    bool canPlaceBlock(const Block& block, sf::Vector2i position) const;
     void placeBlock(const Block& block, sf::Vector2i position);
     int clearFullLines();
+    bool isEmpty() const;
     bool canPlaceAnyBlock(const Block& block) const;
     sf::Vector2i getBoardPosition(sf::Vector2f screenPos) const;
     int getCell(int x, int y) const;
@@ -30,9 +31,8 @@ public:
 
 private:
     int grid[SIZE][SIZE];
+    sf::Color cellColors[SIZE][SIZE];
     sf::RectangleShape cells[SIZE][SIZE];
-    sf::RectangleShape boardBackground;
-    sf::RectangleShape boardBorder;
 
     bool isRowFull(int row);
     bool isColFull(int col);

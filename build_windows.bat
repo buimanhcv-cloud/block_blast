@@ -22,16 +22,23 @@ echo Compiling...
 "%GCC%\g++.exe" -std=c++17 -O2 ^
     main.cpp ^
     core/GameManager.cpp ^
+    core/Scoring.cpp ^
     board/Board.cpp ^
     block/Block.cpp ^
     ui/Menu.cpp ^
+    ui/DuelSelectScreen.cpp ^
     ui/HUD.cpp ^
+    ui/NetworkClient.cpp ^
+    ui/GameNetworkManager.cpp ^
+    ui/OnlineGameMode.cpp ^
+    ui/OnlineGameSelectScreen.cpp ^
     util/ResourceUtils.cpp ^
+    util/ScoreStorage.cpp ^
     tests/SelfTest.cpp ^
     -I. -Icore -Iboard -Iblock -Iui -Iutil ^
     -I"%SFML%\include" ^
     -L"%SFML%\lib" ^
-    -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system ^
+    -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system -lws2_32 ^
     -o %OUT%
 
 if %ERRORLEVEL% NEQ 0 (

@@ -1,6 +1,7 @@
 #include "SelfTest.h"
 #include "board/Board.h"
 #include "block/Block.h"
+#include "core/Scoring.h"
 #include <iostream>
 
 static int passed = 0;
@@ -47,6 +48,16 @@ int runSelfTests() {
                 board.placeBlock(single, {x, y});
     check(!board.canPlaceAnyBlock(big), "4x4 doesn't fit on nearly-full board");
     check(board.canPlaceAnyBlock(single), "1x1 still fits at last cell");
+
+    // 6. Scoring
+    check(Scoring::pointsForClear(1, false) == 10, "1 line = 10 points");
+    check(Scoring::pointsForClear(2, false) == 40, "2 lines = 40 points (x2)");
+    check(Scoring::pointsForClear(3, false) == 90, "3 lines = 90 points (x3)");
+    check(Scoring::pointsForClear(1, true) == 50, "1 line + full board = 50 (x5)");
+    check(Scoring::pointsForClear(2, true) == 200, "2 lines + full board = 200");
+
+    board.reset();
+    check(board.isEmpty(), "Fresh board is empty");
 
     std::cout << "\n=== Results: " << passed << " passed, " << failed << " failed ===\n";
     return failed > 0 ? 1 : 0;

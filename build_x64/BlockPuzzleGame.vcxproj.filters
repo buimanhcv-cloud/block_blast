@@ -7,6 +7,9 @@
     <ClCompile Include="C:\Users\buima\Documents\app\core\GameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\buima\Documents\app\core\Scoring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\buima\Documents\app\board\Board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -16,10 +19,16 @@
     <ClCompile Include="C:\Users\buima\Documents\app\ui\Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\buima\Documents\app\ui\DuelSelectScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\buima\Documents\app\ui\HUD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\buima\Documents\app\util\ResourceUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\buima\Documents\app\util\ScoreStorage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\buima\Documents\app\tests\SelfTest.cpp">

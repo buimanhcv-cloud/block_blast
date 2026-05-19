@@ -9,27 +9,24 @@ public:
     ~HUD();
 
     void render(sf::RenderWindow& window);
-    void updateScore(int score, int highScore);
+    void updateScore(int score);
+    void setVersusMode(bool enabled);
+    void setActivePlayer(int playerIndex);
+    bool isMenuClicked(sf::Vector2f mousePos) const;
 
 private:
     sf::Font font;
-    int currentScore;
-    int currentHighScore;
+    bool versusMode;
 
-    sf::RectangleShape topBadge;
-    sf::RectangleShape settingsButton;
+    sf::RectangleShape menuButton;
     sf::RectangleShape scorePanel;
-    sf::RectangleShape trayPanel;
-    sf::RectangleShape traySlotLeft;
-    sf::RectangleShape traySlotCenter;
-    sf::RectangleShape traySlotRight;
+    sf::RectangleShape turnPanel;
+    sf::RectangleShape playerIndicator;
 
-    sf::Text crownText;
-    sf::Text settingsText;
+    sf::Text menuText;
     sf::Text scoreLabel;
     sf::Text scoreValueText;
-    sf::Text highScoreLabel;
-    sf::Text highScoreText;
+    sf::Text turnText;
 };
 
 #endif // HUD_H

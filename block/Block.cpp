@@ -1,71 +1,66 @@
 #include "Block.h"
 
 #include <algorithm>
-#include <cstdlib>
-#include <ctime>
+#include <chrono>
+#include <random>
 
-// 19 block shapes covering all standard Block Puzzle pieces
+// 36 shapes, all within 3x3 — varied but still easy to place
 static const std::vector<std::vector<std::vector<int>>> ALL_SHAPES = {
-    // Single
+    // 1 cell
     {{1}},
-    // Dominoes
+
+    // 2 cells — domino
     {{1, 1}},
     {{1}, {1}},
-    // Triominoes
+
+    // 3 cells — tromino
     {{1, 1, 1}},
     {{1}, {1}, {1}},
     {{1, 1}, {1, 0}},
     {{1, 1}, {0, 1}},
     {{1, 0}, {1, 1}},
     {{0, 1}, {1, 1}},
-    // Tetrominoes
-    {{1, 1, 1, 1}},
-    {{1}, {1}, {1}, {1}},
+
+    // 4 cells — tetromino (fits 3x3)
     {{1, 1}, {1, 1}},
-    {{1, 1, 1}, {1, 0, 0}},
-    {{1, 1, 1}, {0, 0, 1}},
-    {{1, 0, 0}, {1, 1, 1}},
-    {{0, 0, 1}, {1, 1, 1}},
     {{1, 1, 1}, {0, 1, 0}},
-    // Pentominoes
+    {{1, 0}, {1, 1}, {1, 0}},
+    {{0, 1, 0}, {1, 1, 1}},
+    {{0, 1}, {1, 1}, {0, 1}},
+    {{1, 0, 0}, {1, 1, 1}},
+    {{1, 1}, {1, 0}, {1, 0}},
+    {{1, 1, 1}, {0, 0, 1}},
+    {{0, 1}, {0, 1}, {1, 1}},
+    {{0, 1, 1}, {1, 1, 0}},
+    {{1, 1, 0}, {0, 1, 1}},
+    {{1, 0}, {1, 1}, {0, 1}},
+
+    // 5 cells — compact pentomino
+    {{0, 1, 0}, {1, 1, 1}, {0, 1, 0}},
     {{1, 1, 1}, {1, 0, 0}, {1, 0, 0}},
     {{1, 1, 1}, {0, 0, 1}, {0, 0, 1}},
-};
+    {{1, 1, 1}, {1, 1, 0}},
+    {{1, 1, 0}, {1, 1, 1}},
+    {{1, 0}, {1, 1}, {0, 1}},
+    {{0, 1}, {1, 1}, {1, 0}},
+    {{1, 1, 0}, {0, 1, 0}, {0, 1, 1}},
+    {{0, 1, 1}, {0, 1, 0}, {1, 1, 0}},
 
-// Color palette for each shape index
-static const std::vector<sf::Color> SHAPE_COLORS = {
-    sf::Color(132, 193, 255),  // single - light blue
-    sf::Color(246, 173, 230),  // domino h - pink
-    sf::Color(246, 173, 230),  // domino v - pink
-    sf::Color(92, 212, 255),   // tri h - cyan
-    sf::Color(92, 212, 255),   // tri v - cyan
-    sf::Color(235, 102, 140),  // tri L1 - rose
-    sf::Color(235, 102, 140),  // tri L2 - rose
-    sf::Color(235, 102, 140),  // tri L3 - rose
-    sf::Color(235, 102, 140),  // tri L4 - rose
-    sf::Color(255, 206, 91),   // I4 h - yellow
-    sf::Color(255, 206, 91),   // I4 v - yellow
-    sf::Color(180, 130, 255),  // O - purple
-    sf::Color(255, 140, 90),   // L1 - orange
-    sf::Color(255, 140, 90),   // L2 - orange
-    sf::Color(255, 140, 90),   // L3 - orange
-    sf::Color(255, 140, 90),   // L4 - orange
-    sf::Color(100, 230, 180),  // T - teal
-    sf::Color(255, 180, 80),   // P1 - amber
-    sf::Color(255, 180, 80),   // P2 - amber
+    // 6 cells — rectangles & U (easy)
+    {{1, 1, 1}, {1, 1, 1}},
+    {{1, 1}, {1, 1}, {1, 1}},
+    {{1, 1, 1}, {1, 0, 1}},
+    {{1, 0, 1}, {1, 1, 1}},
+    {{1, 1, 0}, {0, 1, 1}, {0, 1, 1}},
+    {{0, 1, 1}, {1, 1, 0}, {1, 1, 0}},
 };
-
-static int g_shapeIndex = -1; // track which shape was chosen for color lookup
 
 Block::Block() {
-    static bool seeded = false;
-    if (!seeded) {
-        std::srand(static_cast<unsigned int>(std::time(nullptr)));
-        seeded = true;
-    }
-    g_shapeIndex = std::rand() % static_cast<int>(ALL_SHAPES.size());
-    shape = ALL_SHAPES[g_shapeIndex];
-    blockColor = SHAPE_COLORS[g_shapeIndex];
+    static std::mt19937 rng(static_cast<unsigned>(
+        std::chrono::steady_clock::now().time_since_epoch().count()));
+    std::uniform_int_distribution<int> dist(0, static_cast<int>(ALL_SHAPES.size()) - 1);
+    shape = ALL_SHAPES[dist(rng)];
+    blockColor = chooseBlockColor();
     buildCells();
     setPosition(sf::Vector2f(0.f, 0.f));
 }
@@ -88,11 +83,42 @@ void Block::buildCells() {
     for (size_t y = 0; y < shape.size(); ++y) {
         for (size_t x = 0; x < shape[y].size(); ++x) {
             if (!shape[y][x]) continue;
-            sf::RectangleShape cell(sf::Vector2f(CELL_SIZE - 6.f, CELL_SIZE - 6.f));
+            sf::RectangleShape cell(sf::Vector2f(CELL_SIZE - 2.f, CELL_SIZE - 2.f));
             cell.setFillColor(blockColor);
-            cell.setOutlineColor(sf::Color(255, 255, 255, 150));
-            cell.setOutlineThickness(2.f);
+            cell.setOutlineThickness(0.f);
             cells.push_back(cell);
+        }
+    }
+    buildPreviewCache();
+}
+
+void Block::buildPreviewCache() {
+    previewCells.clear();
+    previewHitRects.clear();
+
+    constexpr float scale = 0.55f;
+    const float cs = CELL_SIZE * scale;
+    const float cellDraw = cs - 2.f;
+    const float cols = static_cast<float>(shape.empty() ? 0 : shape[0].size());
+    const float rows = static_cast<float>(shape.size());
+    const float totalW = cols * cs;
+    const float totalH = rows * cs;
+    const float startX = -totalW / 2.f;
+    const float startY = -totalH / 2.f;
+
+    for (size_t y = 0; y < shape.size(); ++y) {
+        for (size_t x = 0; x < shape[y].size(); ++x) {
+            if (!shape[y][x]) continue;
+
+            const float localX = startX + static_cast<float>(x) * cs + 1.f;
+            const float localY = startY + static_cast<float>(y) * cs + 1.f;
+
+            sf::RectangleShape cell(sf::Vector2f(cellDraw, cellDraw));
+            cell.setPosition(localX, localY);
+            cell.setFillColor(blockColor);
+            cell.setOutlineThickness(0.f);
+            previewCells.push_back(cell);
+            previewHitRects.emplace_back(localX, localY, cellDraw, cellDraw);
         }
     }
 }
@@ -106,8 +132,8 @@ void Block::setPosition(sf::Vector2f position) {
         for (size_t x = 0; x < shape[y].size(); ++x) {
             if (!shape[y][x]) continue;
             cells[cellIndex].setPosition(
-                position.x + static_cast<float>(x) * CELL_SIZE + 3.f,
-                position.y + static_cast<float>(y) * CELL_SIZE + 3.f);
+                position.x + static_cast<float>(x) * CELL_SIZE + 1.f,
+                position.y + static_cast<float>(y) * CELL_SIZE + 1.f);
             ++cellIndex;
         }
     }
@@ -119,26 +145,11 @@ void Block::render(sf::RenderWindow& window) const {
     for (const auto& cell : cells) window.draw(cell);
 }
 
-void Block::renderPreview(sf::RenderWindow& window, sf::Vector2f center, float scale) const {
-    const float cs = CELL_SIZE * scale;
-    const float cellDraw = cs - 4.f;
-    const float cols = static_cast<float>(shape.empty() ? 0 : shape[0].size());
-    const float rows = static_cast<float>(shape.size());
-    const float totalW = cols * cs;
-    const float totalH = rows * cs;
-    const float startX = center.x - totalW / 2.f;
-    const float startY = center.y - totalH / 2.f;
-
-    for (size_t y = 0; y < shape.size(); ++y) {
-        for (size_t x = 0; x < shape[y].size(); ++x) {
-            if (!shape[y][x]) continue;
-            sf::RectangleShape cell(sf::Vector2f(cellDraw, cellDraw));
-            cell.setPosition(startX + x * cs + 2.f, startY + y * cs + 2.f);
-            cell.setFillColor(blockColor);
-            cell.setOutlineColor(sf::Color(255, 255, 255, 120));
-            cell.setOutlineThickness(1.5f);
-            window.draw(cell);
-        }
+void Block::renderPreview(sf::RenderWindow& window, sf::Vector2f center, float /*scale*/) const {
+    for (size_t i = 0; i < previewCells.size(); ++i) {
+        const sf::FloatRect& local = previewHitRects[i];
+        previewCells[i].setPosition(center.x + local.left, center.y + local.top);
+        window.draw(previewCells[i]);
     }
 }
 
@@ -152,29 +163,28 @@ bool Block::contains(sf::Vector2f point) const {
     return false;
 }
 
-bool Block::containsPreview(sf::Vector2f point, sf::Vector2f center, float scale) const {
-    const float cs = CELL_SIZE * scale;
-    const float cellDraw = cs - 4.f;
-    const float cols = static_cast<float>(shape.empty() ? 0 : shape[0].size());
-    const float rows = static_cast<float>(shape.size());
-    const float totalW = cols * cs;
-    const float totalH = rows * cs;
-    const float startX = center.x - totalW / 2.f;
-    const float startY = center.y - totalH / 2.f;
-
-    for (size_t y = 0; y < shape.size(); ++y) {
-        for (size_t x = 0; x < shape[y].size(); ++x) {
-            if (!shape[y][x]) continue;
-            sf::FloatRect rect(startX + static_cast<float>(x) * cs + 2.f,
-                               startY + static_cast<float>(y) * cs + 2.f,
-                               cellDraw, cellDraw);
-            if (rect.contains(point)) return true;
+bool Block::containsPreview(sf::Vector2f point, sf::Vector2f center, float /*scale*/) const {
+    for (const auto& local : previewHitRects) {
+        const sf::FloatRect world(
+            center.x + local.left, center.y + local.top, local.width, local.height);
+        if (world.contains(point)) {
+            return true;
         }
     }
     return false;
 }
 
 const std::vector<std::vector<int>>& Block::getShape() const { return shape; }
+
+sf::Color Block::getColor() const { return blockColor; }
+
+void Block::setColor(sf::Color color) {
+    blockColor = color;
+    for (auto& cell : cells) {
+        cell.setFillColor(blockColor);
+    }
+    buildPreviewCache();
+}
 
 sf::Vector2f Block::getSize() const {
     float width = 0.f;
@@ -187,8 +197,9 @@ sf::Vector2f Block::getSize() const {
 sf::Color Block::chooseBlockColor() const {
     // fallback for constructor-from-shape
     static const std::vector<sf::Color> colors = {
-        sf::Color(92,212,255), sf::Color(235,102,140), sf::Color(255,206,91),
-        sf::Color(180,130,255), sf::Color(100,230,180), sf::Color(255,140,90),
+        sf::Color(132, 193, 255), sf::Color(246, 173, 230), sf::Color(92, 212, 255),
+        sf::Color(235, 102, 140), sf::Color(255, 206, 91), sf::Color(180, 130, 255),
+        sf::Color(255, 140, 90), sf::Color(100, 230, 180), sf::Color(255, 180, 80),
     };
     size_t h = 0;
     for (const auto& row : shape)
