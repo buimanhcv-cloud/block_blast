@@ -7,6 +7,9 @@
     <ClCompile Include="C:\Users\buima\Documents\app\core\GameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\buima\Documents\app\core\AIPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\buima\Documents\app\board\Board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -17,6 +20,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\buima\Documents\app\ui\HUD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\buima\Documents\app\ui\NetworkClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\buima\Documents\app\ui\GameNetworkManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\buima\Documents\app\ui\OnlineGameMode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\buima\Documents\app\ui\OnlineGameSelectScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\buima\Documents\app\util\ResourceUtils.cpp">

@@ -1,3 +1,3 @@
 Set WshShell = CreateObject("WScript.Shell")
-WshShell.CurrentDirectory = CreateObject("Scripting.FileSystemObject").GetParentFolderName(WScript.ScriptFullName)
-WshShell.Run """BlockPuzzleGame.exe""", 0, False
+WshShell.Run Chr(34) & Replace(WScript.ScriptFullName, "Play.vbs", "BlockPuzzleGame.exe") & Chr(34), 0
+Set WshShell = Nothing

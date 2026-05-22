@@ -1,0 +1,32 @@
+========================================================================
+             HƯỚNG DẪN KẾT NỐI CHƠI GAME ONLINE ĐỐI KHÁNG (PVP)
+========================================================================
+
+Hệ thống kết nối Online đã được cấu hình tự động thông qua máy chủ Playit.gg. 
+Bây giờ, việc kết nối chơi game cực kỳ đơn giản và không cần thiết lập thủ công nữa!
+
+------------------------------------------------------------------------
+🎮 DÀNH CHO MÁY TÍNH (PC)
+------------------------------------------------------------------------
+Bạn chỉ cần nén toàn bộ thư mục game này lại và gửi cho bạn bè của bạn.
+
+Các bước chơi:
+1. Bạn và bạn bè của bạn mở game bằng cách chạy file "BlockPuzzleGame.exe" (hoặc chạy file "Play_Game.bat" để test).
+2. Tại màn hình chính, nhấn chọn "ONLINE".
+3. Nhấn vào ô "Room ID" và nhập một mã phòng bất kỳ giống nhau (ví dụ: 1234).
+   - Địa chỉ Host và Port đã được nạp sẵn mặc định là:
+     Host: 147.185.221.19
+     Port: 34530
+4. Cả hai người nhấn nút "Connect & Join" để bắt đầu so tài đối kháng!
+
+------------------------------------------------------------------------
+📱 DÀNH CHO ĐIỆN THOẠI (MOBILE)
+------------------------------------------------------------------------
+Phiên bản di động (Unity) cũng đã được nạp sẵn địa chỉ máy chủ Playit.gg này.
+
+Các bước chơi trên điện thoại:
+1. Cài đặt game lên điện thoại.
+2. Mở game lên và chọn chế độ "ONLINE".
+3. Nhập chung một mã phòng (Room ID) với người chơi còn lại (có thể chơi chéo giữa Điện thoại và PC!).
+4. Bấm "Connect & Join" là trận đấu sẽ tự động bắt đầu!
+========================================================================

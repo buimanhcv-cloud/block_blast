@@ -3,7 +3,7 @@ echo ========================================
 echo  Block Puzzle Game - Build Script
 echo ========================================
 
-set "SFML=C:\SFML"
+set "SFML=C:\SFML.backup"
 set "GCC=C:\TDM-GCC-64\bin"
 set "OUT=BlockPuzzleGame.exe"
 
@@ -22,16 +22,21 @@ echo Compiling...
 "%GCC%\g++.exe" -std=c++17 -O2 ^
     main.cpp ^
     core/GameManager.cpp ^
+    core/AIPlayer.cpp ^
     board/Board.cpp ^
     block/Block.cpp ^
     ui/Menu.cpp ^
     ui/HUD.cpp ^
+    ui/NetworkClient.cpp ^
+    ui/GameNetworkManager.cpp ^
+    ui/OnlineGameMode.cpp ^
+    ui/OnlineGameSelectScreen.cpp ^
     util/ResourceUtils.cpp ^
     tests/SelfTest.cpp ^
     -I. -Icore -Iboard -Iblock -Iui -Iutil ^
     -I"%SFML%\include" ^
     -L"%SFML%\lib" ^
-    -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system ^
+    -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system -lsfml-network ^
     -o %OUT%
 
 if %ERRORLEVEL% NEQ 0 (
